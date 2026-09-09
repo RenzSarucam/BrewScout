@@ -18,7 +18,7 @@ export function Navbar() {
   return (
     <header className="flex items-center justify-between border-b border-border bg-card px-6 py-3">
       <Link href="/" className="flex items-center">
-        <Image src="/logo-icon.png" alt="Brew Scout" width={44} height={44} className="rounded-md" />
+        <Image src="/logo-wordmark.png" alt="Brew Scout" width={1252} height={534} priority className="h-11 w-auto" />
       </Link>
 
       <nav className="flex items-center gap-3">
