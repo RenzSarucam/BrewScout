@@ -1,5 +1,8 @@
 import { env } from "@/config/env";
+import { ensureCsrfCookie, getXsrfTokenFromCookie } from "@/lib/api/csrf";
 import type { ApiResponse } from "@/types/api";
+
+const SAFE_METHODS = new Set(["GET", "HEAD", "OPTIONS"]);
 
 export class ApiRequestError extends Error {
   status: number;
@@ -19,6 +22,13 @@ type RequestOptions = Omit<RequestInit, "body"> & {
 
 async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
   const { body, headers, ...rest } = options;
+  const method = (rest.method ?? "GET").toString().toUpperCase();
+
+  let xsrfToken = getXsrfTokenFromCookie();
+  if (!SAFE_METHODS.has(method) && !xsrfToken) {
+    await ensureCsrfCookie();
+    xsrfToken = getXsrfTokenFromCookie();
+  }
 
   const response = await fetch(`${env.apiUrl}${path}`, {
     ...rest,
@@ -26,6 +36,7 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
     headers: {
       Accept: "application/json",
       ...(body !== undefined ? { "Content-Type": "application/json" } : {}),
+      ...(xsrfToken ? { "X-XSRF-TOKEN": xsrfToken } : {}),
       ...headers,
     },
     body: body !== undefined ? JSON.stringify(body) : undefined,
