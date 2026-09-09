@@ -13,7 +13,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   if (isLoading) {
     return (
       <div className="flex min-h-screen flex-1 items-center justify-center">
-        <LoadingState label="Brewing your coffee..." />
+        <LoadingState label="Scout your coffee..." />
       </div>
     );
   }

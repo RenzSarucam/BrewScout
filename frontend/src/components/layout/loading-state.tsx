@@ -3,7 +3,7 @@ interface LoadingStateProps {
   className?: string;
 }
 
-export function LoadingState({ label = "Brewing your coffee...", className = "" }: LoadingStateProps) {
+export function LoadingState({ label = "Scout your coffee...", className = "" }: LoadingStateProps) {
   return (
     <div
       role="status"
