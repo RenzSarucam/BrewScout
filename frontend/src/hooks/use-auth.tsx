@@ -47,7 +47,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const minimumSplash = new Promise((resolve) => setTimeout(resolve, MIN_SPLASH_MS));
 
     // eslint-disable-next-line react-hooks/set-state-in-effect -- fetch-on-mount session check
-    Promise.all([refresh(), minimumSplash]).finally(() => setIsLoading(false));
+    Promise.all([refresh(), minimumSplash])
+      .catch(() => {
+        // A non-401 failure (network error, timeout, etc) just means we
+        // couldn't confirm a session — treat the user as signed out.
+      })
+      .finally(() => setIsLoading(false));
   }, [refresh]);
 
   const login = React.useCallback(async (values: LoginValues) => {

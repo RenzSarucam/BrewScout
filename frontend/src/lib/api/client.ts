@@ -4,6 +4,11 @@ import type { ApiResponse } from "@/types/api";
 
 const SAFE_METHODS = new Set(["GET", "HEAD", "OPTIONS"]);
 
+// Plain fetch() never times out on its own — a request can hang forever if
+// nothing responds (backend down, blocked by the network, etc). Give every
+// call a hard ceiling so callers always get a resolved/rejected promise.
+const DEFAULT_TIMEOUT_MS = 15000;
+
 export class ApiRequestError extends Error {
   status: number;
   errors?: Record<string, string[]>;
@@ -30,17 +35,31 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
     xsrfToken = getXsrfTokenFromCookie();
   }
 
-  const response = await fetch(`${env.apiUrl}${path}`, {
-    ...rest,
-    credentials: "include",
-    headers: {
-      Accept: "application/json",
-      ...(body !== undefined ? { "Content-Type": "application/json" } : {}),
-      ...(xsrfToken ? { "X-XSRF-TOKEN": xsrfToken } : {}),
-      ...headers,
-    },
-    body: body !== undefined ? JSON.stringify(body) : undefined,
-  });
+  const timeoutController = new AbortController();
+  const timeoutId = setTimeout(() => timeoutController.abort(), DEFAULT_TIMEOUT_MS);
+
+  let response: Response;
+  try {
+    response = await fetch(`${env.apiUrl}${path}`, {
+      ...rest,
+      signal: rest.signal ?? timeoutController.signal,
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        ...(body !== undefined ? { "Content-Type": "application/json" } : {}),
+        ...(xsrfToken ? { "X-XSRF-TOKEN": xsrfToken } : {}),
+        ...headers,
+      },
+      body: body !== undefined ? JSON.stringify(body) : undefined,
+    });
+  } catch (error) {
+    if (error instanceof Error && error.name === "AbortError") {
+      throw new ApiRequestError("The request timed out. Please check your connection and try again.", 0);
+    }
+    throw new ApiRequestError("Network error. Please check your connection and try again.", 0);
+  } finally {
+    clearTimeout(timeoutId);
+  }
 
   const payload = (await response.json().catch(() => null)) as ApiResponse<T> | null;
 
