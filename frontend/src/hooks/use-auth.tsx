@@ -22,6 +22,10 @@ interface AuthContextValue {
 
 const AuthContext = React.createContext<AuthContextValue | null>(null);
 
+// Minimum time the initial splash stays on screen, so it's perceptible even
+// when the session check resolves (or fails) almost instantly.
+const MIN_SPLASH_MS = 500;
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = React.useState<User | null>(null);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -36,14 +40,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       } else {
         throw error;
       }
-    } finally {
-      setIsLoading(false);
     }
   }, []);
 
   React.useEffect(() => {
+    const minimumSplash = new Promise((resolve) => setTimeout(resolve, MIN_SPLASH_MS));
+
     // eslint-disable-next-line react-hooks/set-state-in-effect -- fetch-on-mount session check
-    refresh();
+    Promise.all([refresh(), minimumSplash]).finally(() => setIsLoading(false));
   }, [refresh]);
 
   const login = React.useCallback(async (values: LoginValues) => {

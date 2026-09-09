@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Footer } from "@/components/layout/footer";
-import { Navbar } from "@/components/layout/navbar";
-import { Toaster } from "@/components/ui/sonner";
+import { AppShell } from "@/components/layout/app-shell";
 import { AuthProvider } from "@/hooks/use-auth";
 
 const geistSans = Geist({
@@ -30,10 +28,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <AuthProvider>
-          <Navbar />
-          {children}
-          <Footer />
-          <Toaster />
+          <AppShell>{children}</AppShell>
         </AuthProvider>
       </body>
     </html>

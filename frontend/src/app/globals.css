@@ -100,3 +100,36 @@
     @apply font-sans;
   }
 }
+
+@keyframes brew-steam {
+  0% {
+    transform: translateY(0) scaleX(1);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(-22px) scaleX(1.6);
+    opacity: 0;
+  }
+}
+
+@keyframes brew-cup-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.animate-brew-steam {
+  animation: brew-steam 2.2s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+.animate-brew-cup-bob {
+  animation: brew-cup-bob 2.2s ease-in-out infinite;
+}
