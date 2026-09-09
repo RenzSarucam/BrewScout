@@ -16,8 +16,8 @@ export function Navbar() {
   }
 
   return (
-    <header className="flex items-center justify-between border-b border-[#D8B894]/40 bg-[#F7F1E8] px-6 py-3">
-      <Link href="/" className="flex items-center gap-2 font-semibold text-[#2B1D17]">
+    <header className="flex items-center justify-between border-b border-border bg-card px-6 py-3">
+      <Link href="/" className="flex items-center gap-2 font-semibold text-foreground">
         <Image src="/logo.png" alt="" width={28} height={28} className="rounded-md" aria-hidden="true" />
         Brew Scout
       </Link>
@@ -25,7 +25,7 @@ export function Navbar() {
       <nav className="flex items-center gap-3">
         {!isLoading && user ? (
           <>
-            <span className="hidden text-sm text-[#6F4E37] sm:inline">{user.name}</span>
+            <span className="hidden text-sm text-muted-foreground sm:inline">{user.name}</span>
             <Button variant="outline" size="sm" onClick={handleLogout}>
               Log out
             </Button>

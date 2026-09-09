@@ -46,7 +46,7 @@ function ResetPasswordForm() {
     return (
       <p className="text-sm text-muted-foreground">
         This password reset link is invalid or incomplete. Please request a new one from the{" "}
-        <Link href="/forgot-password" className="font-medium text-[#6F4E37] hover:underline">
+        <Link href="/forgot-password" className="font-medium text-primary hover:underline">
           forgot password
         </Link>{" "}
         page.
@@ -97,7 +97,7 @@ export default function ResetPasswordPage() {
   return (
     <main className="mx-auto flex min-h-[70vh] w-full max-w-sm flex-col justify-center gap-6 px-6 py-16">
       <div>
-        <h1 className="text-2xl font-semibold text-[#2B1D17]">Reset password</h1>
+        <h1 className="text-2xl font-semibold text-foreground">Reset password</h1>
         <p className="text-sm text-muted-foreground">Choose a new password for your account.</p>
       </div>
 

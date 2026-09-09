@@ -39,14 +39,14 @@ export default function ForgotPasswordPage() {
   return (
     <main className="mx-auto flex min-h-[70vh] w-full max-w-sm flex-col justify-center gap-6 px-6 py-16">
       <div>
-        <h1 className="text-2xl font-semibold text-[#2B1D17]">Forgot password</h1>
+        <h1 className="text-2xl font-semibold text-foreground">Forgot password</h1>
         <p className="text-sm text-muted-foreground">
           Enter your email and we&apos;ll send you a link to reset your password.
         </p>
       </div>
 
       {sent ? (
-        <p className="text-sm text-[#6F4E37]">
+        <p className="text-sm text-primary">
           If an account exists for that email, a reset link is on its way.
         </p>
       ) : (
@@ -73,7 +73,7 @@ export default function ForgotPasswordPage() {
         </Form>
       )}
 
-      <Link href="/login" className="text-sm font-medium text-[#6F4E37] hover:underline">
+      <Link href="/login" className="text-sm font-medium text-primary hover:underline">
         Back to log in
       </Link>
     </main>

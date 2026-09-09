@@ -44,7 +44,7 @@ export default function LoginPage() {
   return (
     <main className="mx-auto flex min-h-[70vh] w-full max-w-sm flex-col justify-center gap-6 px-6 py-16">
       <div>
-        <h1 className="text-2xl font-semibold text-[#2B1D17]">Log in</h1>
+        <h1 className="text-2xl font-semibold text-foreground">Log in</h1>
         <p className="text-sm text-muted-foreground">Welcome back to Brew Scout.</p>
       </div>
 
@@ -90,7 +90,7 @@ export default function LoginPage() {
         </Link>
         <span>
           Don&apos;t have an account?{" "}
-          <Link href="/register" className="font-medium text-[#6F4E37] hover:underline">
+          <Link href="/register" className="font-medium text-primary hover:underline">
             Sign up
           </Link>
         </span>
