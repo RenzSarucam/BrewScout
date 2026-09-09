@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import * as React from "react";
+import { LoadingState } from "@/components/layout/loading-state";
 import { useAuth } from "@/hooks/use-auth";
 
 export function RequireAdmin({ children }: { children: React.ReactNode }) {
@@ -19,11 +20,7 @@ export function RequireAdmin({ children }: { children: React.ReactNode }) {
   }, [isLoading, user, router]);
 
   if (isLoading || !user || user.role !== "admin") {
-    return (
-      <div className="flex min-h-[60vh] items-center justify-center px-6 py-16 text-muted-foreground">
-        Loading...
-      </div>
-    );
+    return <LoadingState />;
   }
 
   return <>{children}</>;
