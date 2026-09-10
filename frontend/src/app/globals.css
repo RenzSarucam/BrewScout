@@ -101,53 +101,43 @@
   }
 }
 
-@keyframes brew-pin-drop {
+@keyframes brew-cup-bob {
   0%,
   100% {
-    transform: translateY(0) scale(1, 1);
-  }
-  40% {
-    transform: translateY(-16px) scale(1, 1);
+    transform: translateY(0);
   }
   50% {
-    transform: translateY(-16px) scale(1.05, 0.95);
+    transform: translateY(-4px);
   }
-  62% {
-    transform: translateY(0) scale(0.94, 1.08);
+}
+
+@keyframes brew-scout-sweep {
+  0% {
+    transform: translate(-22px, 6px) rotate(-18deg);
+  }
+  25% {
+    transform: translate(-4px, -14px) rotate(-4deg);
+  }
+  50% {
+    transform: translate(22px, 6px) rotate(18deg);
   }
   75% {
-    transform: translateY(-4px) scale(1.02, 0.98);
+    transform: translate(-4px, -14px) rotate(-4deg);
   }
-  88% {
-    transform: translateY(0) scale(1, 1);
+  100% {
+    transform: translate(-22px, 6px) rotate(-18deg);
   }
 }
 
-@keyframes brew-shadow-pulse {
+@keyframes brew-glint {
   0%,
-  100% {
-    transform: scale(1);
-    opacity: 0.4;
-  }
   40%,
-  50% {
-    transform: scale(0.55);
-    opacity: 0.15;
-  }
-  88% {
-    transform: scale(1);
-    opacity: 0.4;
-  }
-}
-
-@keyframes brew-ping {
-  0% {
-    transform: scale(0.2);
-    opacity: 0.8;
-  }
   100% {
-    transform: scale(3);
     opacity: 0;
+  }
+  50%,
+  60% {
+    opacity: 0.9;
   }
 }
 
@@ -191,22 +181,20 @@
   }
 }
 
-.animate-brew-pin-drop {
-  animation: brew-pin-drop 2.6s cubic-bezier(0.33, 1, 0.68, 1) infinite;
+.animate-brew-cup-bob {
+  animation: brew-cup-bob 2.8s ease-in-out infinite;
   transform-box: fill-box;
   transform-origin: bottom center;
 }
 
-.animate-brew-shadow-pulse {
-  animation: brew-shadow-pulse 2.6s cubic-bezier(0.33, 1, 0.68, 1) infinite;
+.animate-brew-scout-sweep {
+  animation: brew-scout-sweep 3.6s ease-in-out infinite;
   transform-box: fill-box;
   transform-origin: center;
 }
 
-.animate-brew-ping {
-  animation: brew-ping 2.6s cubic-bezier(0, 0, 0.2, 1) infinite;
-  transform-box: fill-box;
-  transform-origin: center;
+.animate-brew-glint {
+  animation: brew-glint 3.6s ease-in-out infinite;
 }
 
 .animate-brew-scan {
