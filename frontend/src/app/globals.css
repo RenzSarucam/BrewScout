@@ -101,35 +101,46 @@
   }
 }
 
-@keyframes brew-steam {
-  0% {
-    transform: translateY(0) scaleX(1);
-    opacity: 0;
-  }
-  15% {
-    opacity: 0.9;
-  }
-  100% {
-    transform: translateY(-22px) scaleX(1.6);
-    opacity: 0;
-  }
-}
-
-@keyframes brew-cup-bob {
+@keyframes brew-pin-drop {
   0%,
   100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-3px);
+    transform: translateY(-7px);
   }
 }
 
-.animate-brew-steam {
-  animation: brew-steam 2.2s ease-in-out infinite;
-  transform-origin: bottom center;
+@keyframes brew-ping {
+  0% {
+    transform: scale(0.25);
+    opacity: 0.75;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
 }
 
-.animate-brew-cup-bob {
-  animation: brew-cup-bob 2.2s ease-in-out infinite;
+@keyframes brew-scan {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+.animate-brew-pin-drop {
+  animation: brew-pin-drop 1.8s ease-in-out infinite;
+}
+
+.animate-brew-ping {
+  animation: brew-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+  transform-origin: center;
+}
+
+.animate-brew-scan {
+  animation: brew-scan 1.8s ease-in-out infinite;
 }
