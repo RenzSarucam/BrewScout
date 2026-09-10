@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\PlacesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,5 +26,11 @@ Route::prefix('v1')->group(function () {
             Route::post('/logout', [AuthController::class, 'logout']);
             Route::get('/me', [AuthController::class, 'me']);
         });
+    });
+
+    Route::prefix('places')->group(function () {
+        Route::get('/nearby', [PlacesController::class, 'nearby']);
+        Route::get('/geocode', [PlacesController::class, 'geocode']);
+        Route::get('/{googlePlaceId}', [PlacesController::class, 'show']);
     });
 });

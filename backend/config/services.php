@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'google' => [
+        'places_key' => env('GOOGLE_PLACES_API_KEY'),
+        'routes_key' => env('GOOGLE_ROUTES_API_KEY'),
+        'geocoding_key' => env('GOOGLE_GEOCODING_API_KEY'),
+    ],
+
 ];

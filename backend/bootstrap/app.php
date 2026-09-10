@@ -1,5 +1,7 @@
 <?php
 
+use App\Exceptions\GoogleGeocodingException;
+use App\Exceptions\GooglePlacesException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -35,6 +37,15 @@ return Application::configure(basePath: dirname(__DIR__))
                     'success' => false,
                     'message' => 'Unauthenticated.',
                 ], 401);
+            }
+        });
+
+        $exceptions->render(function (GooglePlacesException|GoogleGeocodingException $e, Request $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $e->getMessage(),
+                ], 502);
             }
         });
 
