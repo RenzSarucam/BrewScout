@@ -7,6 +7,7 @@ use App\Http\Requests\Places\GeocodeRequest;
 use App\Http\Requests\Places\NearbyPlacesRequest;
 use App\Services\GoogleGeocodingService;
 use App\Services\GooglePlacesService;
+use App\Services\RecommendationService;
 use App\Support\PlaceNormalizer;
 use Illuminate\Http\JsonResponse;
 
@@ -15,6 +16,7 @@ class PlacesController extends Controller
     public function __construct(
         private readonly GooglePlacesService $places,
         private readonly GoogleGeocodingService $geocoding,
+        private readonly RecommendationService $recommendations,
     ) {}
 
     public function geocode(GeocodeRequest $request): JsonResponse
@@ -57,9 +59,11 @@ class PlacesController extends Controller
             $results = $results->filter(fn (array $place) => $place['open_now'] === true);
         }
 
+        $ranked = $this->recommendations->rank($results->values()->all(), $radius);
+
         return response()->json([
             'success' => true,
-            'data' => $results->values(),
+            'data' => $ranked,
         ]);
     }
 

@@ -14,6 +14,8 @@ export interface PlaceSummary {
   distance_meters: number | null;
   location: Coordinates | null;
   photo: string | null;
+  recommendation_score: number;
+  badge: string | null;
 }
 
 export interface PlaceDetails {

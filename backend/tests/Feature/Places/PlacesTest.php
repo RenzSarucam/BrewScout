@@ -43,6 +43,30 @@ class PlacesTest extends TestCase
         $this->assertIsInt($response->json('data.0.distance_meters'));
     }
 
+    public function test_nearby_search_ranks_results_with_recommendation_scores_and_badges(): void
+    {
+        Http::fake([
+            '*'.self::NEARBY_ENDPOINT => Http::response([
+                'places' => [
+                    ['id' => 'weak', 'displayName' => ['text' => 'Weak'], 'rating' => 2.5, 'userRatingCount' => 2, 'location' => ['latitude' => 7.09, 'longitude' => 125.63]],
+                    ['id' => 'strong', 'displayName' => ['text' => 'Strong'], 'rating' => 4.9, 'userRatingCount' => 900, 'currentOpeningHours' => ['openNow' => true], 'location' => ['latitude' => 7.0731, 'longitude' => 125.6128]],
+                ],
+            ], 200),
+        ]);
+
+        $response = $this->getJson('/api/v1/places/nearby?lat=7.0731&lng=125.6128&radius=5000');
+
+        $response->assertStatus(200)
+            ->assertJsonPath('data.0.place_id', 'strong')
+            ->assertJsonPath('data.0.badge', 'Best Overall');
+
+        $this->assertIsFloat($response->json('data.0.recommendation_score'));
+        $this->assertGreaterThan(
+            $response->json('data.1.recommendation_score'),
+            $response->json('data.0.recommendation_score'),
+        );
+    }
+
     public function test_nearby_search_filters_by_minimum_rating(): void
     {
         Http::fake([

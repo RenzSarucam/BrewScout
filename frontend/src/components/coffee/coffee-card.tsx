@@ -38,6 +38,15 @@ export function CoffeeCard({ place }: CoffeeCardProps) {
           <h3 className="text-base font-semibold text-foreground">{place.name}</h3>
         </div>
 
+        {place.badge && (
+          <span
+            className="inline-flex w-fit items-center gap-1 rounded-full bg-secondary px-2.5 py-1 text-xs font-medium text-secondary-foreground"
+            title="Brew Scout Recommendation"
+          >
+            ★ {place.badge}
+          </span>
+        )}
+
         <Rating value={place.rating} reviewCount={place.review_count} />
 
         {distance && <p className="text-sm text-muted-foreground">{distance}</p>}
