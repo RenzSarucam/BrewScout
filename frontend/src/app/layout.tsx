@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AppShell } from "@/components/layout/app-shell";
 import { AuthProvider } from "@/hooks/use-auth";
+import { SavedPlacesProvider } from "@/hooks/use-saved-places";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,7 +29,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <AuthProvider>
-          <AppShell>{children}</AppShell>
+          <SavedPlacesProvider>
+            <AppShell>{children}</AppShell>
+          </SavedPlacesProvider>
         </AuthProvider>
       </body>
     </html>

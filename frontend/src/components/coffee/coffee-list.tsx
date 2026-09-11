@@ -9,9 +9,18 @@ interface CoffeeListProps {
   status: "idle" | "loading" | "success" | "error";
   errorMessage?: string;
   onRetry?: () => void;
+  emptyTitle?: string;
+  emptyDescription?: string;
 }
 
-export function CoffeeList({ places, status, errorMessage, onRetry }: CoffeeListProps) {
+export function CoffeeList({
+  places,
+  status,
+  errorMessage,
+  onRetry,
+  emptyTitle = "No coffee shops found.",
+  emptyDescription = "Try another location or expand your search radius.",
+}: CoffeeListProps) {
   if (status === "loading" || status === "idle") {
     return <LoadingState label="Scout your coffee..." />;
   }
@@ -27,12 +36,7 @@ export function CoffeeList({ places, status, errorMessage, onRetry }: CoffeeList
   }
 
   if (places.length === 0) {
-    return (
-      <EmptyState
-        title="No coffee shops found."
-        description="Try another location or expand your search radius."
-      />
-    );
+    return <EmptyState title={emptyTitle} description={emptyDescription} />;
   }
 
   return (

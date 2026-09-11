@@ -53,4 +53,9 @@ class User extends Authenticatable
     {
         return $this->role === 'admin';
     }
+
+    public function savedPlaces()
+    {
+        return $this->hasMany(SavedPlace::class);
+    }
 }

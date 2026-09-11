@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\PlacesController;
 use App\Http\Controllers\Api\V1\RoutesController;
+use App\Http\Controllers\Api\V1\SavedPlacesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,4 +37,10 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::post('/routes', [RoutesController::class, 'store']);
+
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/saved-places', [SavedPlacesController::class, 'index']);
+        Route::post('/saved-places', [SavedPlacesController::class, 'store']);
+        Route::delete('/saved-places/{googlePlaceId}', [SavedPlacesController::class, 'destroy']);
+    });
 });

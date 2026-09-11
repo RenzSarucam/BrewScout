@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Rating } from "@/components/coffee/rating";
+import { SaveButton } from "@/components/coffee/save-button";
 import { formatDistance } from "@/lib/utils/format";
 import type { PlaceSummary } from "@/types/place";
 
@@ -31,6 +32,7 @@ export function CoffeeCard({ place }: CoffeeCardProps) {
             {place.open_now ? "Open Now" : "Closed"}
           </span>
         )}
+        <SaveButton place={place} iconOnly className="absolute right-3 top-3 size-8" />
       </div>
 
       <div className="flex flex-1 flex-col gap-2 p-4">

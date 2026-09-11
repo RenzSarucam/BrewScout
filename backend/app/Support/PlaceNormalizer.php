@@ -21,7 +21,7 @@ class PlaceNormalizer
      * @param  array<string, mixed>  $place
      * @return array<string, mixed>
      */
-    public static function summary(array $place, GooglePlacesService $service, float $userLat, float $userLng): array
+    public static function summary(array $place, GooglePlacesService $service, ?float $userLat = null, ?float $userLng = null): array
     {
         $lat = $place['location']['latitude'] ?? null;
         $lng = $place['location']['longitude'] ?? null;
@@ -34,7 +34,7 @@ class PlaceNormalizer
             'review_count' => $place['userRatingCount'] ?? 0,
             'price_level' => self::PRICE_LEVELS[$place['priceLevel'] ?? ''] ?? null,
             'open_now' => $place['currentOpeningHours']['openNow'] ?? null,
-            'distance_meters' => $lat !== null && $lng !== null
+            'distance_meters' => $lat !== null && $lng !== null && $userLat !== null && $userLng !== null
                 ? (int) round(Distance::haversineMeters($userLat, $userLng, $lat, $lng))
                 : null,
             'location' => $lat !== null && $lng !== null ? ['lat' => $lat, 'lng' => $lng] : null,

@@ -8,11 +8,29 @@ import { Button } from "@/components/ui/button";
 import { ErrorState } from "@/components/layout/error-state";
 import { LoadingState } from "@/components/layout/loading-state";
 import { Rating } from "@/components/coffee/rating";
+import { SaveButton } from "@/components/coffee/save-button";
 import { DirectionsButton } from "@/components/navigation/directions-button";
 import { fetchPlaceDetails } from "@/lib/api/places";
 import { ApiRequestError } from "@/lib/api/client";
 import { formatPriceLevel } from "@/lib/utils/format";
-import type { PlaceDetails } from "@/types/place";
+import type { PlaceDetails, PlaceSummary } from "@/types/place";
+
+function toPlaceSummary(details: PlaceDetails): PlaceSummary {
+  return {
+    place_id: details.place_id,
+    name: details.name,
+    address: details.address,
+    rating: details.rating,
+    review_count: details.review_count,
+    price_level: details.price_level,
+    open_now: details.open_now,
+    distance_meters: null,
+    location: details.location,
+    photo: details.photos[0] ?? null,
+    recommendation_score: 0,
+    badge: null,
+  };
+}
 
 type Status = "loading" | "success" | "error";
 
@@ -103,9 +121,7 @@ export default function CoffeeDetailsPage() {
       {place.location && <DirectionsButton destination={place.location} placeId={place.place_id} />}
 
       <div className="flex flex-wrap gap-2">
-        <Button variant="secondary" disabled title="Coming soon">
-          Save
-        </Button>
+        <SaveButton place={toPlaceSummary(place)} />
         <Button variant="secondary" onClick={handleShare}>
           Share
         </Button>
