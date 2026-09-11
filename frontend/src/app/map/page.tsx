@@ -1,7 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
+import { Button } from "@/components/ui/button";
 import { CoffeeCard } from "@/components/coffee/coffee-card";
 import { DiscoverFilters } from "@/components/coffee/discover-filters";
 import { EmptyState } from "@/components/layout/empty-state";
@@ -18,6 +20,7 @@ export default function MapPage() {
   const search = useCoffeeSearch();
   const { geolocation } = search;
   const [selectedPlaceId, setSelectedPlaceId] = React.useState<string | null>(null);
+  const isDenied = geolocation.status === "denied";
 
   const selectedPlace = search.places.find((place) => place.place_id === selectedPlaceId) ?? null;
 
@@ -26,7 +29,7 @@ export default function MapPage() {
   }
 
   return (
-    <main className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-6">
+    <main className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-6 sm:px-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <SearchBar
           defaultValue={search.keyword}
@@ -34,21 +37,18 @@ export default function MapPage() {
           className="w-full sm:max-w-sm"
           placeholder={geolocation.coordinates ? "Search coffee shops..." : "Enter a city or place..."}
         />
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <LocationButton status={geolocation.status} onClick={search.handleUseLocation} />
-          <Link
-            href="/discover"
-            className="inline-flex items-center rounded-lg border border-border bg-card px-3 py-2 text-sm font-medium text-foreground hover:bg-muted"
-          >
-            List view
-          </Link>
+          <Button asChild variant="secondary">
+            <Link href="/discover">List view</Link>
+          </Button>
         </div>
       </div>
 
       {geolocation.coordinates && <DiscoverFilters value={search.filters} onChange={search.setFilters} />}
 
       {!geolocation.coordinates ? (
-        <div className="flex min-h-[50vh] flex-col items-center justify-center gap-3 rounded-2xl border border-border bg-card p-6 text-center">
+        <div className="flex min-h-[50vh] flex-col items-center justify-center rounded-2xl border border-border bg-card p-6 text-center">
           {search.status === "loading" ? (
             <LoadingState label="Scout your coffee..." />
           ) : search.status === "error" ? (
@@ -57,11 +57,17 @@ export default function MapPage() {
               description={search.errorMessage ?? "Try a different city or place name."}
             />
           ) : (
-            <p className="text-sm text-muted-foreground">
-              {search.modalDismissed || geolocation.status === "denied"
-                ? "Enter a location or search a city above to see the map."
-                : "Use your location or search a city to see the map."}
-            </p>
+            <EmptyState
+              icon={
+                <Image src="/logo-icon.png" alt="" width={64} height={64} aria-hidden="true" className="opacity-90" />
+              }
+              title={isDenied ? "Location access is disabled." : "See coffee shops on the map."}
+              description={
+                isDenied
+                  ? "Enter a location or search a city above to see the map."
+                  : "Use your location or search a city above to get started."
+              }
+            />
           )}
         </div>
       ) : (

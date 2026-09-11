@@ -33,7 +33,7 @@ export default function Home() {
         <Button asChild size="lg">
           <Link href="/discover">Find Coffee Near Me</Link>
         </Button>
-        <Button asChild size="lg" variant="outline">
+        <Button asChild size="lg" variant="secondary">
           <Link href="/map">Explore Map</Link>
         </Button>
       </div>

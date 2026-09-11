@@ -111,13 +111,13 @@ export default function CoffeeDetailsPage() {
             </a>
           </Button>
         )}
-        <Button variant="outline" disabled title="Coming soon">
+        <Button variant="secondary" disabled title="Coming soon">
           Save
         </Button>
-        <Button variant="outline" onClick={handleShare}>
+        <Button variant="secondary" onClick={handleShare}>
           Share
         </Button>
-        <Button variant="outline" disabled title="Coming soon">
+        <Button variant="secondary" disabled title="Coming soon">
           Write a Review
         </Button>
         {place.google_maps_url && (

@@ -21,7 +21,7 @@ function DiscoverPageInner() {
   const isDenied = geolocation.status === "denied";
 
   return (
-    <main className="mx-auto flex max-w-6xl flex-col gap-8 px-6 py-10">
+    <main className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-8 sm:px-6 sm:py-10">
       <div className="flex flex-col items-center gap-6 text-center">
         <div className="flex flex-col gap-1">
           <h1 className="text-3xl font-semibold tracking-tight text-foreground">
@@ -41,9 +41,9 @@ function DiscoverPageInner() {
             className="w-full sm:max-w-sm"
             placeholder={geolocation.coordinates ? "Search coffee shops..." : "Enter a city or place..."}
           />
-          <div className="flex justify-center gap-2">
+          <div className="flex flex-wrap justify-center gap-2">
             <LocationButton status={geolocation.status} onClick={search.handleUseLocation} />
-            <Button asChild variant="outline">
+            <Button asChild variant="secondary">
               <Link href="/map">Map view</Link>
             </Button>
           </div>
