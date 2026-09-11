@@ -2,6 +2,7 @@
 
 use App\Exceptions\GoogleGeocodingException;
 use App\Exceptions\GooglePlacesException;
+use App\Exceptions\GoogleRoutesException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -40,7 +41,7 @@ return Application::configure(basePath: dirname(__DIR__))
             }
         });
 
-        $exceptions->render(function (GooglePlacesException|GoogleGeocodingException $e, Request $request) {
+        $exceptions->render(function (GooglePlacesException|GoogleGeocodingException|GoogleRoutesException $e, Request $request) {
             if ($request->is('api/*')) {
                 return response()->json([
                     'success' => false,

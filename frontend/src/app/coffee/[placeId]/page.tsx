@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { ErrorState } from "@/components/layout/error-state";
 import { LoadingState } from "@/components/layout/loading-state";
 import { Rating } from "@/components/coffee/rating";
+import { DirectionsButton } from "@/components/navigation/directions-button";
 import { fetchPlaceDetails } from "@/lib/api/places";
 import { ApiRequestError } from "@/lib/api/client";
 import { formatPriceLevel } from "@/lib/utils/format";
@@ -99,18 +100,9 @@ export default function CoffeeDetailsPage() {
         {place.address && <p className="text-sm text-muted-foreground">{place.address}</p>}
       </div>
 
+      {place.location && <DirectionsButton destination={place.location} placeId={place.place_id} />}
+
       <div className="flex flex-wrap gap-2">
-        {place.location && (
-          <Button asChild>
-            <a
-              href={`https://www.google.com/maps/dir/?api=1&destination=${place.location.lat},${place.location.lng}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Get Directions
-            </a>
-          </Button>
-        )}
         <Button variant="secondary" disabled title="Coming soon">
           Save
         </Button>
@@ -164,12 +156,6 @@ export default function CoffeeDetailsPage() {
           ))}
         </div>
       )}
-
-      <p className="text-xs text-muted-foreground">
-        Route distances and travel times are estimates and may change due to traffic, road closures, weather,
-        construction, GPS accuracy, local restrictions, or other conditions. Always follow applicable traffic laws
-        and road signs.
-      </p>
     </main>
   );
 }

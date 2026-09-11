@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\PlacesController;
+use App\Http\Controllers\Api\V1\RoutesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,4 +34,6 @@ Route::prefix('v1')->group(function () {
         Route::get('/geocode', [PlacesController::class, 'geocode']);
         Route::get('/{googlePlaceId}', [PlacesController::class, 'show']);
     });
+
+    Route::post('/routes', [RoutesController::class, 'store']);
 });
