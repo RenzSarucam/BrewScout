@@ -34,19 +34,17 @@ function DiscoverPageInner() {
           </p>
         </div>
 
-        <div className="flex w-full max-w-2xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-center">
+        <div className="flex w-full max-w-2xl flex-wrap items-center justify-center gap-3">
           <SearchBar
             defaultValue={search.keyword}
             onSearch={search.handleSearch}
-            className="w-full sm:max-w-sm"
+            className="w-full sm:w-auto sm:min-w-[16rem]"
             placeholder={geolocation.coordinates ? "Search coffee shops..." : "Enter a city or place..."}
           />
-          <div className="flex flex-wrap justify-center gap-2">
-            <LocationButton status={geolocation.status} onClick={search.handleUseLocation} />
-            <Button asChild variant="secondary">
-              <Link href="/map">Map view</Link>
-            </Button>
-          </div>
+          <LocationButton status={geolocation.status} onClick={search.handleUseLocation} />
+          <Button asChild variant="secondary">
+            <Link href="/map">Map view</Link>
+          </Button>
         </div>
 
         {geolocation.coordinates && <DiscoverFilters value={search.filters} onChange={search.setFilters} />}

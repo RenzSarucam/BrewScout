@@ -30,19 +30,17 @@ export default function MapPage() {
 
   return (
     <main className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-6 sm:px-6">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-wrap items-center gap-3">
         <SearchBar
           defaultValue={search.keyword}
           onSearch={search.handleSearch}
-          className="w-full sm:max-w-sm"
+          className="w-full sm:w-auto sm:min-w-[16rem] sm:flex-1 sm:max-w-sm"
           placeholder={geolocation.coordinates ? "Search coffee shops..." : "Enter a city or place..."}
         />
-        <div className="flex flex-wrap gap-2">
-          <LocationButton status={geolocation.status} onClick={search.handleUseLocation} />
-          <Button asChild variant="secondary">
-            <Link href="/discover">List view</Link>
-          </Button>
-        </div>
+        <LocationButton status={geolocation.status} onClick={search.handleUseLocation} />
+        <Button asChild variant="secondary">
+          <Link href="/discover">List view</Link>
+        </Button>
       </div>
 
       {geolocation.coordinates && <DiscoverFilters value={search.filters} onChange={search.setFilters} />}
