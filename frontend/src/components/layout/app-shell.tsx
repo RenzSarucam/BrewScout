@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { CookieConsentBanner } from "@/components/layout/cookie-consent-banner";
 import { Footer } from "@/components/layout/footer";
 import { LoadingState } from "@/components/layout/loading-state";
 import { Navbar } from "@/components/layout/navbar";
@@ -24,6 +25,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       {children}
       <Footer />
       <Toaster />
+      <CookieConsentBanner />
     </>
   );
 }

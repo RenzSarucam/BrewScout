@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -25,7 +26,7 @@ export default function RegisterPage() {
 
   const form = useForm<RegisterValues>({
     resolver: zodResolver(registerSchema),
-    defaultValues: { name: "", email: "", password: "", password_confirmation: "" },
+    defaultValues: { name: "", email: "", password: "", password_confirmation: "", accepted_terms: false },
   });
 
   async function onSubmit(values: RegisterValues) {
@@ -107,6 +108,32 @@ export default function RegisterPage() {
                 <FormControl>
                   <Input type="password" autoComplete="new-password" {...field} />
                 </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="accepted_terms"
+            render={({ field }) => (
+              <FormItem>
+                <div className="flex items-start gap-2">
+                  <FormControl>
+                    <Checkbox checked={field.value} onCheckedChange={field.onChange} className="mt-0.5" />
+                  </FormControl>
+                  <FormLabel className="font-normal text-muted-foreground">
+                    I agree to the{" "}
+                    <Link href="/terms" className="text-primary hover:underline">
+                      Terms of Use
+                    </Link>{" "}
+                    and{" "}
+                    <Link href="/privacy" className="text-primary hover:underline">
+                      Privacy Policy
+                    </Link>
+                    .
+                  </FormLabel>
+                </div>
                 <FormMessage />
               </FormItem>
             )}

@@ -100,8 +100,8 @@ The MVP was built incrementally, in this order:
 6. **Favorites**
 7. **Reviews**
 8. **Admin**
-9. **Compliance** (legal pages, consent) *(next)*
-10. **Polish**
+9. **Compliance** (legal pages, consent)
+10. **Polish** *(next)*
 
 ## License
 
