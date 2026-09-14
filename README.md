@@ -97,10 +97,10 @@ The MVP was built incrementally, in this order:
 3. **Coffee discovery** — location, Google Places search, filters, map, place details
 4. **Recommendation engine** — weighted scoring, sorting, "Brew Scout Recommendation" badges
 5. **Directions** — Routes API, travel modes, route summary, navigation handoff
-6. **Favorites** *(next)*
+6. **Favorites**
 7. **Reviews**
 8. **Admin**
-9. **Compliance** (legal pages, consent)
+9. **Compliance** (legal pages, consent) *(next)*
 10. **Polish**
 
 ## License

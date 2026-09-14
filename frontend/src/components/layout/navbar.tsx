@@ -53,6 +53,11 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
+          {!isLoading && user?.role === "admin" && (
+            <Link href="/admin/reports" className="hover:text-foreground">
+              Admin
+            </Link>
+          )}
         </nav>
       </div>
 

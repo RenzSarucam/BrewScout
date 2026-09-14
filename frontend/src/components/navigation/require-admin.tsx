@@ -11,7 +11,6 @@ export function RequireAdmin({ children }: { children: React.ReactNode }) {
 
   React.useEffect(() => {
     if (isLoading) return;
-
     if (!user) {
       router.replace("/login");
     } else if (user.role !== "admin") {

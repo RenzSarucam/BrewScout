@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\Admin\ReportsController as AdminReportsController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\PlacesController;
 use App\Http\Controllers\Api\V1\ReportsController;
@@ -54,5 +55,10 @@ Route::prefix('v1')->group(function () {
         Route::delete('/reviews/{review}', [ReviewsController::class, 'destroy']);
 
         Route::post('/reports', [ReportsController::class, 'store']);
+
+        Route::middleware('admin')->prefix('admin')->group(function () {
+            Route::get('/reports', [AdminReportsController::class, 'index']);
+            Route::patch('/reports/{report}', [AdminReportsController::class, 'update']);
+        });
     });
 });

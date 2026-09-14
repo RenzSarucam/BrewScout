@@ -3,6 +3,7 @@
 use App\Exceptions\GoogleGeocodingException;
 use App\Exceptions\GooglePlacesException;
 use App\Exceptions\GoogleRoutesException;
+use App\Http\Middleware\EnsureUserIsAdmin;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -22,6 +23,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->statefulApi();
+        $middleware->alias(['admin' => EnsureUserIsAdmin::class]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (ValidationException $e, Request $request) {
