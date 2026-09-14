@@ -9,4 +9,9 @@ class Place extends Model
     protected $fillable = [
         'google_place_id',
     ];
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

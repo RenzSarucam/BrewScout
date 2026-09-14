@@ -1,15 +1,19 @@
 "use client";
 
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import * as React from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { ErrorState } from "@/components/layout/error-state";
 import { LoadingState } from "@/components/layout/loading-state";
+import { ImHereButton } from "@/components/coffee/im-here-button";
 import { Rating } from "@/components/coffee/rating";
+import { ReviewFormDialog } from "@/components/coffee/review-form-dialog";
+import { ReviewList } from "@/components/coffee/review-list";
 import { SaveButton } from "@/components/coffee/save-button";
 import { DirectionsButton } from "@/components/navigation/directions-button";
+import { useAuth } from "@/hooks/use-auth";
 import { fetchPlaceDetails } from "@/lib/api/places";
 import { ApiRequestError } from "@/lib/api/client";
 import { formatPriceLevel } from "@/lib/utils/format";
@@ -37,10 +41,14 @@ type Status = "loading" | "success" | "error";
 export default function CoffeeDetailsPage() {
   const params = useParams<{ placeId: string }>();
   const placeId = decodeURIComponent(params.placeId);
+  const router = useRouter();
+  const { user } = useAuth();
 
   const [place, setPlace] = React.useState<PlaceDetails | null>(null);
   const [status, setStatus] = React.useState<Status>("loading");
   const [errorMessage, setErrorMessage] = React.useState<string | undefined>();
+  const [reviewDialogOpen, setReviewDialogOpen] = React.useState(false);
+  const [reviewsRefreshKey, setReviewsRefreshKey] = React.useState(0);
 
   const load = React.useCallback(() => {
     setStatus("loading");
@@ -107,7 +115,10 @@ export default function CoffeeDetailsPage() {
       <div className="flex flex-col gap-2">
         <h1 className="text-2xl font-semibold text-foreground">{place.name}</h1>
         <div className="flex flex-wrap items-center gap-3 text-sm">
-          <Rating value={place.rating} reviewCount={place.review_count} />
+          <span className="flex items-center gap-1">
+            <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Google:</span>
+            <Rating value={place.rating} reviewCount={place.review_count} />
+          </span>
           {priceLevel && <span className="text-muted-foreground">{priceLevel}</span>}
           {place.open_now !== null && (
             <span className={place.open_now ? "font-medium text-primary" : "font-medium text-muted-foreground"}>
@@ -125,7 +136,17 @@ export default function CoffeeDetailsPage() {
         <Button variant="secondary" onClick={handleShare}>
           Share
         </Button>
-        <Button variant="secondary" disabled title="Coming soon">
+        <ImHereButton placeId={place.place_id} />
+        <Button
+          variant="secondary"
+          onClick={() => {
+            if (!user) {
+              router.push("/login");
+              return;
+            }
+            setReviewDialogOpen(true);
+          }}
+        >
           Write a Review
         </Button>
         {place.google_maps_url && (
@@ -172,6 +193,18 @@ export default function CoffeeDetailsPage() {
           ))}
         </div>
       )}
+
+      <div className="flex flex-col gap-3 border-t border-border pt-6">
+        <h2 className="text-lg font-semibold text-foreground">Brew Scout Reviews</h2>
+        <ReviewList placeId={place.place_id} refreshKey={reviewsRefreshKey} />
+      </div>
+
+      <ReviewFormDialog
+        placeId={place.place_id}
+        open={reviewDialogOpen}
+        onOpenChange={setReviewDialogOpen}
+        onSaved={() => setReviewsRefreshKey((key) => key + 1)}
+      />
     </main>
   );
 }

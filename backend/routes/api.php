@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\PlacesController;
+use App\Http\Controllers\Api\V1\ReportsController;
+use App\Http\Controllers\Api\V1\ReviewsController;
 use App\Http\Controllers\Api\V1\RoutesController;
 use App\Http\Controllers\Api\V1\SavedPlacesController;
 use Illuminate\Http\Request;
@@ -38,9 +40,19 @@ Route::prefix('v1')->group(function () {
 
     Route::post('/routes', [RoutesController::class, 'store']);
 
+    Route::get('/reviews', [ReviewsController::class, 'index']);
+
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/saved-places', [SavedPlacesController::class, 'index']);
         Route::post('/saved-places', [SavedPlacesController::class, 'store']);
         Route::delete('/saved-places/{googlePlaceId}', [SavedPlacesController::class, 'destroy']);
+
+        Route::get('/reviews/mine', [ReviewsController::class, 'mine']);
+        Route::post('/reviews/arrival-check', [ReviewsController::class, 'checkArrival']);
+        Route::post('/reviews', [ReviewsController::class, 'store']);
+        Route::put('/reviews/{review}', [ReviewsController::class, 'update']);
+        Route::delete('/reviews/{review}', [ReviewsController::class, 'destroy']);
+
+        Route::post('/reports', [ReportsController::class, 'store']);
     });
 });
