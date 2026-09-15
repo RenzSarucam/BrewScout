@@ -7,6 +7,8 @@ use App\Http\Requests\Auth\ForgotPasswordRequest;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\ResetPasswordRequest;
+use App\Http\Requests\Auth\UpdatePasswordRequest;
+use App\Http\Requests\Auth\UpdateProfileRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -73,6 +75,32 @@ class AuthController extends Controller
         return response()->json([
             'success' => true,
             'data' => new UserResource($request->user()),
+        ]);
+    }
+
+    public function updateProfile(UpdateProfileRequest $request): JsonResponse
+    {
+        $request->user()->update(['name' => $request->string('name')->toString()]);
+
+        return response()->json([
+            'success' => true,
+            'data' => new UserResource($request->user()),
+        ]);
+    }
+
+    public function updatePassword(UpdatePasswordRequest $request): JsonResponse
+    {
+        if (! Hash::check($request->string('current_password')->toString(), $request->user()->password)) {
+            throw ValidationException::withMessages([
+                'current_password' => 'The current password is incorrect.',
+            ]);
+        }
+
+        $request->user()->update(['password' => $request->string('password')->toString()]);
+
+        return response()->json([
+            'success' => true,
+            'data' => null,
         ]);
     }
 

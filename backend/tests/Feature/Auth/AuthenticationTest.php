@@ -4,6 +4,7 @@ namespace Tests\Feature\Auth;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
@@ -94,5 +95,63 @@ class AuthenticationTest extends TestCase
         $response = $this->actingAs($user)->postJson('/api/v1/auth/logout');
 
         $response->assertStatus(200)->assertJsonPath('success', true);
+    }
+
+    public function test_a_guest_cannot_update_their_profile(): void
+    {
+        $this->putJson('/api/v1/auth/me', ['name' => 'New Name'])->assertStatus(401);
+    }
+
+    public function test_a_user_can_update_their_name(): void
+    {
+        $user = User::factory()->create(['name' => 'Old Name']);
+
+        $response = $this->actingAs($user)->putJson('/api/v1/auth/me', ['name' => 'New Name']);
+
+        $response->assertStatus(200)->assertJsonPath('data.name', 'New Name');
+        $this->assertDatabaseHas('users', ['id' => $user->id, 'name' => 'New Name']);
+    }
+
+    public function test_updating_the_profile_requires_a_name(): void
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user)->putJson('/api/v1/auth/me', ['name' => ''])->assertStatus(422);
+    }
+
+    public function test_a_guest_cannot_update_their_password(): void
+    {
+        $this->putJson('/api/v1/auth/me/password', [
+            'current_password' => 'password',
+            'password' => 'new-password123',
+            'password_confirmation' => 'new-password123',
+        ])->assertStatus(401);
+    }
+
+    public function test_a_user_can_change_their_password(): void
+    {
+        $user = User::factory()->create(['password' => 'old-password123']);
+
+        $response = $this->actingAs($user)->putJson('/api/v1/auth/me/password', [
+            'current_password' => 'old-password123',
+            'password' => 'new-password123',
+            'password_confirmation' => 'new-password123',
+        ]);
+
+        $response->assertStatus(200)->assertJsonPath('success', true);
+        $this->assertTrue(Hash::check('new-password123', $user->fresh()->password));
+    }
+
+    public function test_changing_the_password_requires_the_correct_current_password(): void
+    {
+        $user = User::factory()->create(['password' => 'old-password123']);
+
+        $response = $this->actingAs($user)->putJson('/api/v1/auth/me/password', [
+            'current_password' => 'wrong-password',
+            'password' => 'new-password123',
+            'password_confirmation' => 'new-password123',
+        ]);
+
+        $response->assertStatus(422)->assertJsonPath('success', false);
     }
 }

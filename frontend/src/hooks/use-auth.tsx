@@ -7,8 +7,15 @@ import {
   login as loginRequest,
   logout as logoutRequest,
   register as registerRequest,
+  updatePassword as updatePasswordRequest,
+  updateProfile as updateProfileRequest,
 } from "@/lib/api/auth";
-import type { LoginValues, RegisterValues } from "@/lib/validation/auth";
+import type {
+  LoginValues,
+  RegisterValues,
+  UpdatePasswordValues,
+  UpdateProfileValues,
+} from "@/lib/validation/auth";
 import type { User } from "@/types/user";
 
 interface AuthContextValue {
@@ -18,6 +25,8 @@ interface AuthContextValue {
   register: (values: RegisterValues) => Promise<User>;
   logout: () => Promise<void>;
   refresh: () => Promise<void>;
+  updateProfile: (values: UpdateProfileValues) => Promise<User>;
+  updatePassword: (values: UpdatePasswordValues) => Promise<void>;
 }
 
 const AuthContext = React.createContext<AuthContextValue | null>(null);
@@ -72,9 +81,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null);
   }, []);
 
+  const updateProfile = React.useCallback(async (values: UpdateProfileValues) => {
+    const updatedUser = await updateProfileRequest(values);
+    setUser(updatedUser);
+    return updatedUser;
+  }, []);
+
+  const updatePassword = React.useCallback(async (values: UpdatePasswordValues) => {
+    await updatePasswordRequest(values);
+  }, []);
+
   const value = React.useMemo(
-    () => ({ user, isLoading, login, register, logout, refresh }),
-    [user, isLoading, login, register, logout, refresh]
+    () => ({ user, isLoading, login, register, logout, refresh, updateProfile, updatePassword }),
+    [user, isLoading, login, register, logout, refresh, updateProfile, updatePassword]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

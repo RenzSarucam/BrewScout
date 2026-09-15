@@ -101,7 +101,8 @@ The MVP was built incrementally, in this order:
 7. **Reviews**
 8. **Admin**
 9. **Compliance** (legal pages, consent)
-10. **Polish** *(next)*
+10. **Polish** — profile page (edit name, change password), removed
+    out-of-scope stub pages
 
 ## License
 

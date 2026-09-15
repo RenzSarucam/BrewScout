@@ -4,6 +4,8 @@ import type {
   LoginValues,
   RegisterValues,
   ResetPasswordValues,
+  UpdatePasswordValues,
+  UpdateProfileValues,
 } from "@/lib/validation/auth";
 import type { User } from "@/types/user";
 
@@ -21,6 +23,14 @@ export function register(values: RegisterValues) {
 
 export function logout() {
   return apiClient.post<null>("/v1/auth/logout");
+}
+
+export function updateProfile(values: UpdateProfileValues) {
+  return apiClient.put<User>("/v1/auth/me", values);
+}
+
+export function updatePassword(values: UpdatePasswordValues) {
+  return apiClient.put<null>("/v1/auth/me/password", values);
 }
 
 export function forgotPassword(values: ForgotPasswordValues) {
