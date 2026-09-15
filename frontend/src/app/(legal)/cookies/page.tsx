@@ -2,7 +2,7 @@ export default function Page() {
   return (
     <main className="mx-auto flex max-w-3xl flex-col gap-6 px-6 py-16">
       <div>
-        <h1 className="text-3xl font-semibold text-foreground">Cookie Policy</h1>
+        <h1 className="text-3xl font-bold text-foreground">Cookie Policy</h1>
         <p className="mt-1 text-sm text-muted-foreground">Last updated: September 2026</p>
       </div>
 
@@ -15,7 +15,7 @@ export default function Page() {
         </section>
 
         <section>
-          <h2 className="mb-2 font-semibold">Cookies we use</h2>
+          <h2 className="mb-2 font-bold">Cookies we use</h2>
           <div className="overflow-x-auto rounded-xl border border-border">
             <table className="w-full min-w-[500px] border-collapse text-left text-sm">
               <thead className="bg-secondary text-secondary-foreground">
@@ -45,7 +45,7 @@ export default function Page() {
         </section>
 
         <section>
-          <h2 className="mb-1 font-semibold">Managing cookies</h2>
+          <h2 className="mb-1 font-bold">Managing cookies</h2>
           <p>
             Since these cookies are required for the app to function (staying signed in and keeping your
             account secure), turning them off in your browser will effectively sign you out. You can clear

@@ -24,7 +24,7 @@ function DiscoverPageInner() {
     <main className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-8 sm:px-6 sm:py-10">
       <div className="flex flex-col items-center gap-6 text-center">
         <div className="flex flex-col gap-1">
-          <h1 className="text-3xl font-semibold tracking-tight text-foreground">
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">
             {search.locationLabel ? "Discover" : "Find Your Next Coffee"}
           </h1>
           <p className="text-sm text-muted-foreground">

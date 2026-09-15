@@ -51,7 +51,7 @@ export default function RegisterPage() {
   return (
     <main className="mx-auto flex min-h-[70vh] w-full max-w-sm flex-col justify-center gap-6 px-6 py-16">
       <div>
-        <h1 className="text-2xl font-semibold text-foreground">Create your account</h1>
+        <h1 className="text-2xl font-bold text-foreground">Create your account</h1>
         <p className="text-sm text-muted-foreground">Save coffee shops and share reviews.</p>
       </div>
 

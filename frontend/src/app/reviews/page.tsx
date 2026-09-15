@@ -59,7 +59,7 @@ export default function Page() {
   return (
     <RequireAuth>
       <main className="mx-auto flex min-h-[60vh] max-w-3xl flex-col items-start gap-4 px-6 py-16">
-        <h1 className="text-3xl font-semibold text-foreground">My Reviews</h1>
+        <h1 className="text-3xl font-bold text-foreground">My Reviews</h1>
         <MyReviewsList />
       </main>
     </RequireAuth>

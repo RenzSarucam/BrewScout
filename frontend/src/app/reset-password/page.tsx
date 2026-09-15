@@ -97,7 +97,7 @@ export default function ResetPasswordPage() {
   return (
     <main className="mx-auto flex min-h-[70vh] w-full max-w-sm flex-col justify-center gap-6 px-6 py-16">
       <div>
-        <h1 className="text-2xl font-semibold text-foreground">Reset password</h1>
+        <h1 className="text-2xl font-bold text-foreground">Reset password</h1>
         <p className="text-sm text-muted-foreground">Choose a new password for your account.</p>
       </div>
 

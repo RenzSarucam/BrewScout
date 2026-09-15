@@ -71,7 +71,7 @@ export default function AdminReportsPage() {
     <RequireAdmin>
       <main className="mx-auto flex max-w-3xl flex-col gap-6 px-6 py-10">
         <div>
-          <h1 className="text-2xl font-semibold text-foreground">Reports</h1>
+          <h1 className="text-2xl font-bold text-foreground">Reports</h1>
           <p className="text-sm text-muted-foreground">Moderate reported Brew Scout reviews.</p>
         </div>
 

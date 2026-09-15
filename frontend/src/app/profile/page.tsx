@@ -155,15 +155,15 @@ export default function ProfilePage() {
   return (
     <RequireAuth>
       <main className="mx-auto flex max-w-xl flex-col gap-8 px-6 py-10">
-        <h1 className="text-2xl font-semibold text-foreground">Profile</h1>
+        <h1 className="text-2xl font-bold text-foreground">Profile</h1>
 
         <section className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-5">
-          <h2 className="text-sm font-semibold text-foreground">Account details</h2>
+          <h2 className="text-sm font-bold text-foreground">Account details</h2>
           <ProfileForm />
         </section>
 
         <section className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-5">
-          <h2 className="text-sm font-semibold text-foreground">Change password</h2>
+          <h2 className="text-sm font-bold text-foreground">Change password</h2>
           <PasswordForm />
         </section>
       </main>

@@ -113,7 +113,7 @@ export default function CoffeeDetailsPage() {
       )}
 
       <div className="flex flex-col gap-2">
-        <h1 className="text-2xl font-semibold text-foreground">{place.name}</h1>
+        <h1 className="text-2xl font-bold text-foreground">{place.name}</h1>
         <div className="flex flex-wrap items-center gap-3 text-sm">
           <span className="flex items-center gap-1">
             <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Google:</span>
@@ -175,7 +175,7 @@ export default function CoffeeDetailsPage() {
 
       {place.opening_hours.length > 0 && (
         <div className="rounded-2xl border border-border bg-card p-4">
-          <h2 className="mb-2 text-sm font-semibold text-foreground">Opening Hours</h2>
+          <h2 className="mb-2 text-sm font-bold text-foreground">Opening Hours</h2>
           <ul className="flex flex-col gap-1 text-sm text-muted-foreground">
             {place.opening_hours.map((line) => (
               <li key={line}>{line}</li>
@@ -195,7 +195,7 @@ export default function CoffeeDetailsPage() {
       )}
 
       <div className="flex flex-col gap-3 border-t border-border pt-6">
-        <h2 className="text-lg font-semibold text-foreground">Brew Scout Reviews</h2>
+        <h2 className="text-lg font-bold text-foreground">Brew Scout Reviews</h2>
         <ReviewList placeId={place.place_id} refreshKey={reviewsRefreshKey} />
       </div>
 

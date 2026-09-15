@@ -37,7 +37,7 @@ export function CoffeeCard({ place }: CoffeeCardProps) {
 
       <div className="flex flex-1 flex-col gap-2 p-4">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="text-base font-semibold text-foreground">{place.name}</h3>
+          <h3 className="text-base font-bold text-foreground">{place.name}</h3>
         </div>
 
         {place.badge && (
